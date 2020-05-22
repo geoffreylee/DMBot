@@ -11,21 +11,21 @@ with open("data/spells.json", "r") as spells_file:
 ### Thanks Mako for writing this!!
 def parseRoll(expression): 
 	resp = 0
-	components = [x.strip() for x in expression.split("+")]
+	components = [x.strip() for x in expression.lowercase().split("+")]
 	rolls = components[0]
 	total_modifier = sum([int(x) for x in components[1:]])
 	pattern = r'([\d]+)?d([\d]+)'
 	match = re.search(pattern, rolls)
-
 	dice_num = int(match.group(1)) if match.group(1) else 1
-
 	dice_type = int(match.group(2))
-	for i in range(0,dice_num):
-		resp += random.randint(1,dice_type)
+	dice_results = [random.randint(1, dice_type) for x in range(0, dice_num)]
 	
+	resp += sum(dice_results)
 	resp += total_modifier
-	return str(resp)
 
+	resp = str(resp) + " resulting from " + ", ".join(dice_results)
+
+	return str(resp)
 
 
 def lookup(spell_name): 
