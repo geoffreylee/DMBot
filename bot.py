@@ -22,9 +22,9 @@ async def on_ready():
     )
 
 async def on_message():
-	if message.content.startswith('>>'):
+	if message.content[0:2] == ">>":
 		channel = message.channel
-		spell_query = message.content[1:]
+		spell_query = message.content[2:]
 		try:
 			resp = lookup.lookup(spell_query)
 			await channel.send(resp)
