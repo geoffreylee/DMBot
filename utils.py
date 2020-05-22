@@ -14,7 +14,7 @@ def parseRoll(expression):
 	components = [x.strip() for x in expression.lower().split("+")]
 	rolls = components[0]
 	total_modifier = sum([int(x) for x in components[1:]])
-	pattern = r'([\d]+)?d([\d]+)'
+	pattern = r'([\d\.]+)?d([\d\.]+)'
 	match = re.search(pattern, rolls)
 	dice_num = int(match.group(1)) if match.group(1) else 1
 	dice_type = int(match.group(2))
