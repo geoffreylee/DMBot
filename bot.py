@@ -33,7 +33,7 @@ async def on_message(message):
 			await channel.send("Spell not found")
 
 	if message.content[0:5] == "!roll":
-		expression = message.content[4:]
+		expression = message.content[5:]
 		try:
 			resp = utils.parseRoll(expression.strip())
 			await channel.send(resp)
