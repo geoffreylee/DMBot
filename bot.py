@@ -34,7 +34,10 @@ async def on_message(message):
 
 	if message.content[0:5] == "!roll":
 		expression = content[4:]
-		re.search('roll ([\d]+?d[\d]+)', expression)
-
+		try:
+			resp = utils.parseRoll(expression)
+			await channel.send(resp)
+		except:
+			await channel.send("Invalid expression")
 
 client.run(TOKEN)

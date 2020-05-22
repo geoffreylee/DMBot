@@ -1,8 +1,28 @@
 import json
 import textwrap
+import re
+import random
+
 with open("data/spells.json", "r") as spells_file:
 	spells = json.load(spells_file)
 	spells_file.close()
+
+def parseRoll(expression): 
+	resp = 0
+	components = [x.strip() for x in expression.split("+")]
+	rolls = components[0]
+	total_modifier = sum([int(x) for x in components[1:]])
+	pattern = r'([\d]+)?d([\d]+)'
+	match = re.search(pattern, rolls)
+
+	dice_num = int(match.group(1)) if match.group(1) else 1
+
+	dice_type = int(match.group(2))
+	for i in range(0,dice_num):
+		resp += random.randint(1,dice_type)
+	
+	resp += total_modifier
+	return str(resp)
 
 
 
