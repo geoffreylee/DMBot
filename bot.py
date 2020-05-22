@@ -29,6 +29,6 @@ async def on_message(message):
 		try:
 			resp = lookup.lookup(spell_query)
 			await channel.send(resp)
-		except Exception():
+		except:
 			await channel.send("Spell not found")
 client.run(TOKEN)
