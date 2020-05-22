@@ -1,6 +1,6 @@
 import discord
 from dotenv import load_dotenv
-import lookup.py
+import lookup
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
