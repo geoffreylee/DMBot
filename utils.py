@@ -21,12 +21,14 @@ def formatXgte(data):
 	resp = data['Name'] + "\n\tCasting Time: " + str(data['CastingTime']) + "\n\tComponents: " + str(data['Components']) + "\n\tDescription: " + description + "\n\tDuration: " + str(data['Duration']) + "\n\tLevel: " + str(data['Level']) + "\n\tRange: " + str(data['Range']) + "\n\tSchool: " + str(data['School'] + "\n\tRitual:" + str(data['Ritual']))
 	return resp
 
+
 def xgteLookup(spell_name):
-	indices = xgte['ImprovedInitiative.Spells']
+	indicies = json.loads(xgte['ImprovedInitiative.Spells'])
 	for index in indicies:
 		label = "ImprovedInitiative.Spells." + index
-		if xgte[label]['Name'].lower().strip() == spell_name.lower().strip():
-			return formatXgte(xgte[label])
+		data = json.loads(xgte[label])
+		if data['Name'].lower().strip() == spell_name.lower().strip():
+			return formatXgte(data)
 
 	raise Exception("error", "Spell not found in XGTE")
 
