@@ -8,7 +8,7 @@ with open("data/spells.json", "r") as spells_file:
 	spells_file.close()
 
 
-### Thanks Mako!!
+### Thanks Mako for writing this!!
 def parseRoll(expression): 
 	resp = 0
 	components = [x.strip() for x in expression.split("+")]
