@@ -11,7 +11,7 @@ with open("data/spells.json", "r") as spells_file:
 ### Thanks Mako for writing this!!
 def parseRoll(expression): 
 	resp = 0
-	components = [x.strip() for x in expression.lowercase().split("+")]
+	components = [x.strip() for x in expression.lower().split("+")]
 	rolls = components[0]
 	total_modifier = sum([int(x) for x in components[1:]])
 	pattern = r'([\d]+)?d([\d]+)'
@@ -23,7 +23,7 @@ def parseRoll(expression):
 	resp += sum(dice_results)
 	resp += total_modifier
 
-	resp = str(resp) + " resulting from " + ", ".join(dice_results)
+	resp = str(resp) + " resulting from " + ", ".join([str(d) for d in sorted(dice_results)])
 
 	return str(resp)
 
