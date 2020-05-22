@@ -28,7 +28,7 @@ def xgteLookup(spell_name):
 		if xgte[label]['Name'].lower().strip() == spell_name.lower().strip():
 			return formatXgte(xgte[label])
 
-	raise Exception("error", "Spell not found")
+	raise Exception("error", "Spell not found in XGTE")
 
 ### Thanks Mako for writing this!!
 def parseRoll(expression): 
@@ -53,8 +53,11 @@ def lookup(spell_name):
 	for index in spells:
 		if index.lower().strip() == spell_name.lower().strip():
 			return format(index, spells[index])
-
-	raise Exception("error", "Spell not found")
+	try:		
+		resp = xgteLookup(spell_name)
+		return resp
+	except:
+		raise Exception("error", "Spell not found")
 
 def format(index, data):
 	wrapper = textwrap.TextWrapper(width=50) 
