@@ -1,8 +1,8 @@
 import discord
 from dotenv import load_dotenv
-import lookup
+import utils
 import os
-
+import re
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
@@ -23,12 +23,18 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+	channel = message.channel
 	if message.content[0:2] == ">>":
-		channel = message.channel
 		spell_query = message.content[2:]
 		try:
-			resp = lookup.lookup(spell_query)
+			resp = utils.lookup(spell_query)
 			await channel.send(resp)
 		except:
 			await channel.send("Spell not found")
+
+	if message.content[0:5] == "!roll":
+		expression = content[4:]
+		re.search('roll ([\d]+?d[\d]+)', expression)
+
+
 client.run(TOKEN)
