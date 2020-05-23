@@ -47,7 +47,7 @@ def parseRoll(expression):
 	resp += sum(dice_results)
 	resp += total_modifier
 
-	resp = str(resp) + " resulting from " + ", ".join([str(d) for d in sorted(dice_results)])
+	resp = str(resp) + " resulting from " + ", ".join([('**'+str(d)+'**' if (d == 1 or d == 20) else str(d)) for d in sorted(dice_results)])
 
 	return str(resp)
 
