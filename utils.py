@@ -51,14 +51,14 @@ def parseRoll(expression):
 
 	return str(resp)
 
-def discordWrapper(resp, channel):
+def discordWrapper(resp, chunks):
 	if len(resp) > 2000:
 		excerpt = resp[0:2000]
-		await channel.send(excerpt)
-		discordWrapper(resp[2000:], channel)
+		chunks.append(excerpt)
+		return discordWrapper(resp[2000:], chunks)
 	else:
-		await channel.send(resp)
-	return 
+		chunks.append(resp)
+		return chunks
 
 def lookup(spell_name): 
 	for index in spells:

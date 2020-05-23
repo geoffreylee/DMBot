@@ -29,8 +29,9 @@ async def on_message(message):
 		try:
 			resp = utils.lookup(spell_query)
 			# discord mesage limit
-			utils.discordWrapper(resp, channel)
-
+			chunks = utils.discordWrapper(resp, [])
+			for chunk in chunks:
+				await channel.send(chunk)
 			#await channel.send(resp)
 		except:
 			await channel.send("Spell not found")
