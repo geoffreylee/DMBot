@@ -28,7 +28,10 @@ async def on_message(message):
 		spell_query = message.content[2:]
 		try:
 			resp = utils.lookup(spell_query)
-			await channel.send(resp)
+			# discord mesage limit
+			utils.discordWrapper(resp, channel)
+
+			#await channel.send(resp)
 		except:
 			await channel.send("Spell not found")
 

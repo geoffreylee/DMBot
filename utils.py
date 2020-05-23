@@ -51,6 +51,15 @@ def parseRoll(expression):
 
 	return str(resp)
 
+def discordWrapper(resp, channel):
+	if len(resp) > 2000:
+		excerpt = resp[0:2000]
+		await channel.send(excerpt)
+		discordWrapper(resp[2000:], channel)
+	else:
+		await channel.send(resp)
+	return 
+
 def lookup(spell_name): 
 	for index in spells:
 		if index.lower().strip() == spell_name.lower().strip():
