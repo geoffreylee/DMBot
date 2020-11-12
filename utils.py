@@ -38,18 +38,27 @@ def parseRoll(expression):
 	components = [x.strip() for x in expression.lower().split("+")]
 	rolls = components[0]
 	total_modifier = sum([int(x) for x in components[1:]])
-	pattern = r'([\d\.]+)?d([\d\.]+)'
+	pattern = r'([\d\.]+)?d([\d\.]+)([aA]|[dD])?'
 	match = re.search(pattern, rolls)
 	dice_num = int(float(match.group(1))) if match.group(1) else 1
 	dice_type = int(float(match.group(2)))
-	dice_results = [random.randint(1, dice_type) for x in range(0, dice_num)]
-	
-	resp += sum(dice_results)
-	resp += total_modifier
+	advantage = match.group(3)
 
-	resp = str(resp) + " resulting from " + ", ".join([('**'+str(d)+'**' if (d == 1 or d == 20) else str(d)) for d in sorted(dice_results)])
-
-	return str(resp)
+	if advantage:
+		dice_results = [sorted([random.randint(1, dice_type), random.randint(1, dice_type)]) for x in range(0, dice_num)]
+		dice_choice = [max(x) for x in dice_results] if advantage.lower() == 'a' else [min(x) for x in dice_results]
+		resp += sum(dice_choice)
+		resp += total_modifier
+		adv_mod = ' at advantage' if advantage.lower() == 'a' else ' at disadvantage'
+		dice_results_str = ", ".join('**'+str(d)+'**' if (d[0] == 1 or d[0] == 20 or d[1] == 1 or d[1] == 20) else str(d) for d in dice_results)
+		resp = str(resp) + " resulting from " + dice_results_str + adv_mod
+		return str(resp)
+	else:
+		dice_results = [random.randint(1, dice_type) for x in range(0, dice_num)]
+		resp += sum(dice_results)
+		resp += total_modifier
+		resp = str(resp) + " resulting from " + ", ".join([('**'+str(d)+'**' if (d == 1 or d == 20) else str(d)) for d in sorted(dice_results)])
+		return str(resp)
 
 def discordWrapper(resp, chunks):
 	if len(resp) > 2000:
